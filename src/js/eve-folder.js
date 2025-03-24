@@ -62,10 +62,10 @@ async function findProfiles() {
     return;
   }
 
-  const profileDirectories = (await readdir(selectedFolder, {withFileTypes: true}))
-      .filter(entry => entry.isDirectory())
-      .filter(entry => entry.name.startsWith('settings_'))
-      .map(entry => entry.name)
+  const profileDirectories = (await readdir(selectedFolder, { withFileTypes: true }))
+    .filter(entry => entry.isDirectory())
+    .filter(entry => entry.name.startsWith('settings_'))
+    .map(entry => entry.name)
 
   // add profiles to profile table
   const profileDirectoryToOption = profileDirectory => ({ value: profileDirectory, text: profileDirectory.replace(/^settings_/, '').replaceAll(/_/g, ' ') })
@@ -82,13 +82,13 @@ async function readDefaultFolders() {
   const homePath = process.env[(os == 'win32') ? 'USERPROFILE' : 'HOME']
   const fullPath = join(homePath, paths[os])
 
-  const defaultDirs = 
-    (await readdir(fullPath, { withFileTypes: true} ))
-    .filter(dirent => dirent.isDirectory())
-    .filter(dirent => dirent.name.includes(server))
-    .map(dirent => join(fullPath, dirent.name))
+  const defaultDirs =
+    (await readdir(fullPath, { withFileTypes: true }))
+      .filter(dirent => dirent.isDirectory())
+      .filter(dirent => dirent.name.includes(server))
+      .map(dirent => join(fullPath, dirent.name))
   if (defaultDirs.length == 0) return
-  
+
   // render default dirs
   setSelectOptions(folderSelect, defaultDirs.map(dir => ({ value: dir, text: dir })))
   // load saved folder
@@ -154,13 +154,13 @@ async function readSettingFiles() {
   const server = $('#server-select').val()
   const files =
     (await readdir(folderPath, { withFileTypes: true }))
-    .filter(dirent => dirent.isFile())
-    .filter(dirent => (
-      dirent.name.startsWith('core_')
-      && dirent.name.endsWith('.dat')
-      && !(dirent.name.split('.')[0].endsWith('_') || dirent.name.split('.')[0].endsWith(')'))
+      .filter(dirent => dirent.isFile())
+      .filter(dirent => (
+        dirent.name.startsWith('core_')
+        && dirent.name.endsWith('.dat')
+        && !(dirent.name.split('.')[0].endsWith('_') || dirent.name.split('.')[0].endsWith(')'))
       ))
-    .map(dirent => dirent.name.split('.')[0])
+      .map(dirent => dirent.name.split('.')[0])
 
   if (files.length == 0) {
     setSelectOptions(selects, [])
@@ -210,7 +210,7 @@ async function readSettingFiles() {
       chars[file].description = savedDescription
     }
   }
-  
+
   // user files
   for (const file of userFiles) {
     users[file] = {}
@@ -222,14 +222,16 @@ async function readSettingFiles() {
       users[file].description = savedDescription
     }
   }
-  
+
   // render selects
   const charSelect = $('#char-select')
   const characterToOption = ([filename, values]) => ({
     value: filename,
     text: `${values.id} - ${values.name} - ${values.mtime}` + (values.description ? ` - [${values.description}]` : '')
   })
-  setSelectOptions(charSelect, Object.entries(chars).map(characterToOption))
+  const charsSorted = Object.entries(chars).sort((a, b) => !!a[1].description ? -1 : 1).map(characterToOption)
+  console.log('charsSorted', charsSorted);
+  setSelectOptions(charSelect, charsSorted)
 
   const userSelect = $('#user-select')
   const userToOption = ([filename, values]) => ({

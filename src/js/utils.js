@@ -105,7 +105,7 @@ function bindEvents() {
     const file = $(`#${type}-select`).val()
     if (!file) return
     args.file = file
-    
+
     const server = $('#server-select').val()
     args.server = server
 
