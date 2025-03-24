@@ -7,7 +7,7 @@ const { getLocale } = require('./js/change-language')
 const { overwrite } = require('./js/eve-folder')
 
 let win, selectWin
-function createWindow () {
+function createWindow() {
   // restore window bounds
   const savedBounds = AppConfig.readSettings('bounds')
   const bounds = savedBounds
@@ -23,12 +23,12 @@ function createWindow () {
   }
   win = new BrowserWindow(options)
 
-  if(app.isPackaged) {
-    win.setResizable(false);
+  if (app.isPackaged) {
+    // win.setResizable(false);
   } else {
     win.webContents.openDevTools()
   }
-  
+
   win.loadFile('./src/views/index.html')
 
   // save position when close
@@ -44,13 +44,13 @@ app.whenReady().then(() => {
   ipcMain.handle('dialog:EditDescription', (event, args) => openDescriptionDialog(args))
   ipcMain.on('dialog:Notification', (event, msg) => openNotificationWindow(msg))
   ipcMain.on('dialog:SelectTargets', (event, args) => openSelectWindow(args))
-  ipcMain.on('returnSelected', async (event, args) => { 
+  ipcMain.on('returnSelected', async (event, args) => {
     await selectWin.close()
     reload()
     await overwrite(args)
   })
   ipcMain.on('cancelSelected', () => { selectWin.close() })
-  ipcMain.on('reload', () => reload() )
+  ipcMain.on('reload', () => reload())
 
   createWindow()
 
@@ -71,7 +71,7 @@ function reload() {
 
 async function openFolderDialog() {
   const { canceled, filePaths } = await dialog.showOpenDialog({ properties: ['openDirectory'] })
-  if (canceled) return 
+  if (canceled) return
   else return filePaths[0]
 }
 

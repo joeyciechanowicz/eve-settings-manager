@@ -1,6 +1,6 @@
 {
   "name": "eve-settings-manager",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "EVE Online Settings Manager",
   "main": "src/main.js",
   "repository": "github.com/mintnick/eve-settings-manager",
@@ -26,7 +26,7 @@
   },
   "build": {
     "appId": "eve-settings-manager",
-    "productName": "EVE Settings Manager v1.1.2",
+    "productName": "EVE Settings Manager v1.2.1",
     "mac": {
       "icon": "src/assets/icon.png"
     },
@@ -37,7 +37,7 @@
       "icon": "src/assets/icon.png"
     },
     "portable": {
-      "artifactName": "EVE Settings Manager v1.1.2.exe"
+      "artifactName": "EVE Settings Manager v1.2.1.exe"
     }
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
