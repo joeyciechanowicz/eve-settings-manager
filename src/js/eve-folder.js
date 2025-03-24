@@ -230,7 +230,6 @@ async function readSettingFiles() {
     text: `${values.id} - ${values.name} - ${values.mtime}` + (values.description ? ` - [${values.description}]` : '')
   })
   const charsSorted = Object.entries(chars).sort((a, b) => !!a[1].description ? -1 : 1).map(characterToOption)
-  console.log('charsSorted', charsSorted);
   setSelectOptions(charSelect, charsSorted)
 
   const userSelect = $('#user-select')
@@ -238,7 +237,8 @@ async function readSettingFiles() {
     value: filename,
     text: `${values.id} - ${values.mtime}` + (values.description ? ` - [${values.description}]` : '')
   })
-  setSelectOptions(userSelect, Object.entries(users).map(userToOption))
+  const usersSorted = Object.entries(users).sort((a, b) => !!a[1].description ? -1 : 1).map(userToOption)
+  setSelectOptions(userSelect, usersSorted)
 }
 
 // @params
